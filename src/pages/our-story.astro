@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import { site } from '../data/site';
+
+const whyIcons = ['shield', 'users', 'clock', 'target'];
+---
+
+<BaseLayout
+  title="Nosotros"
+  description="Conoce a SIHYCA: 13 años de experiencia en mantenimiento industrial, ingeniería y suministro de componentes de alta precisión."
+>
+  <PageHero
+    eyebrow="Nosotros"
+    title="Un aliado industrial para operaciones exigentes"
+    description="Acompañamos a plantas y operaciones con mantenimiento integral, ingeniería y suministro de componentes originales."
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Nosotros' },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container split">
+      <div class="split__media">
+        <div class="media-frame media-frame--ratio">
+          <img
+            src="/images/about.svg"
+            alt="Equipo de SIHYCA en una planta industrial"
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="media-frame__badge">
+            <Icon name="shield" />
+            13 años de experiencia
+          </span>
+        </div>
+      </div>
+
+      <div class="split__copy">
+        <p class="eyebrow">Nuestra historia</p>
+        <h2>13 años impulsando la industria</h2>
+        <div class="prose prose--lg">
+          <p>
+            Como líderes en mantenimiento de maquinarias industriales,
+            priorizamos la mejora continua en costos, ofreciendo un servicio
+            personalizado. Nuestro equipo está formado por personas amables,
+            proactivas y atentas a las necesidades de los clientes, siguiendo
+            procedimientos estrictos para cumplir con las solicitudes de manera
+            efectiva.
+          </p>
+          <p>
+            También nos dedicamos a la compra-venta, importación y exportación
+            de materiales ferrosos, así como la construcción y mantenimiento de
+            obras civiles.
+          </p>
+          <p>
+            Atendemos a empresas con un enfoque integral: mantenimiento
+            mecánico, eléctrico y de climatización, obras civiles y suministro
+            de componentes industriales de alta precisión.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">En cifras</p>
+        <h2>Experiencia que sostiene operaciones</h2>
+      </div>
+      <div class="stats">
+        {site.stats.map((stat) => (
+          <div class="stat">
+            <p class="stat__value">{stat.value}</p>
+            <p class="stat__label">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Cómo trabajamos</p>
+        <h2>Nuestros compromisos</h2>
+        <p class="lead">
+          Seguridad, cumplimiento y transparencia en cada intervención.
+        </p>
+      </div>
+
+      <div class="why-grid">
+        {site.whyUs.map((item, index) => (
+          <article class="why-card">
+            <span class="why-card__icon">
+              <Icon name={whyIcons[index]} />
+            </span>
+            <span class="why-card__num" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaPanel
+    title="¿Buscas un aliado industrial de largo plazo?"
+    text="Conversemos sobre tu operación y construyamos un plan de mantenimiento y suministro a la medida de tus equipos."
+  />
+</BaseLayout>

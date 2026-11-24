@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eaf2fa"/>
+      <stop offset="1" stop-color="#d3e5f6"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="240" y1="180" x2="900" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10406f"/>
+      <stop offset="1" stop-color="#1e88e5"/>
+    </linearGradient>
+    <pattern id="blueprint" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#1565c0" stroke-opacity=".1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#blueprint)"/>
+  <circle cx="890" cy="160" r="210" fill="#1565c0" fill-opacity=".08"/>
+  <g transform="translate(340 460)" opacity=".95">
+    <circle r="285" stroke="#0d3a6b" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 14"/>
+    <circle r="228" stroke="url(#steel)" stroke-width="6"/>
+    <circle r="196" stroke="#1565c0" stroke-opacity=".25" stroke-width="26" stroke-dasharray="8 26"/>
+    <circle r="148" stroke="url(#steel)" stroke-width="6"/>
+    <circle r="60" stroke="#0d3a6b" stroke-opacity=".4" stroke-width="22" stroke-dasharray="5 24"/>
+    <g fill="url(#steel)">
+      <circle cx="212" cy="0" r="14"/>
+      <circle cx="183.8" cy="106.1" r="14"/>
+      <circle cx="106.1" cy="183.8" r="14"/>
+      <circle cx="0" cy="212" r="14"/>
+      <circle cx="-106.1" cy="183.8" r="14"/>
+      <circle cx="-183.8" cy="106.1" r="14"/>
+      <circle cx="-212" cy="0" r="14"/>
+      <circle cx="-183.8" cy="-106.1" r="14"/>
+      <circle cx="-106.1" cy="-183.8" r="14"/>
+      <circle cx="0" cy="-212" r="14"/>
+      <circle cx="106.1" cy="-183.8" r="14"/>
+      <circle cx="183.8" cy="-106.1" r="14"/>
+    </g>
+    <circle r="26" stroke="url(#steel)" stroke-width="4"/>
+  </g>
+  <g opacity=".55" stroke="#0d3a6b" stroke-width="3" stroke-linecap="round">
+    <path d="M845 690V560h140v130M890 560v-80M940 560v-80M865 690v40M965 690v40"/>
+    <path d="M845 620h140M845 650h140"/>
+    <path d="M1000 560c60 0 100 40 100 100v30"/>
+    <path d="M1075 680v-16h25v-16h25"/>
+    <circle cx="1075" cy="675" r="6"/>
+  </g>
+  <g opacity=".45" stroke="#1565c0" stroke-width="3" fill="none">
+    <circle cx="180" cy="200" r="62"/>
+    <circle cx="180" cy="200" r="34"/>
+    <path d="M180 138v-22M180 262v22M118 200h-22M242 200h22M136 156l-16-16M224 156l16-16M136 244l-16 16M224 244l16 16"/>
+  </g>
+  <path d="M60 820h1080" stroke="#0d3a6b" stroke-opacity=".15" stroke-width="2"/>
+  <circle cx="1070" cy="240" r="10" fill="#1e88e5" fill-opacity=".35"/>
+  <circle cx="1110" cy="280" r="5" fill="#1e88e5" fill-opacity=".25"/>
+</svg>

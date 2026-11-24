@@ -1,0 +1,140 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { site, whatsappLink } from '../../data/site';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+
+  return products.map((product) => ({
+    params: { slug: product.id },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: CollectionEntry<'products'>;
+}
+
+const { product } = Astro.props;
+const { Content } = await render(product);
+
+const related = (await getCollection('products'))
+  .filter((entry) => entry.id !== product.id)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const hasWhatsApp = Boolean(whatsappLink());
+
+const productLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: product.data.title,
+  description: product.data.description,
+  image: new URL('/og-default.png', site.url).href,
+  brand: { '@type': 'Brand', name: 'NTN' },
+  category: 'Rodamientos y componentes industriales',
+  url: new URL(`/product/${product.id}/`, site.url).href,
+};
+---
+
+<BaseLayout
+  title={product.data.title}
+  description={product.data.description}
+  ogType="product"
+  jsonLd={productLd}
+>
+  <PageHero
+    eyebrow="Rodamientos NTN"
+    title={product.data.title}
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Rodamientos', href: '/rodamientos/' },
+      { label: product.data.title },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container product-hero">
+      <div>
+        <p class="lead">{product.data.description}</p>
+
+        <h2>Características</h2>
+        <ul class="product-features">
+          {product.data.features.map((feature) => (
+            <li>
+              <Icon name="check" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+
+        <h2>Aplicaciones frecuentes</h2>
+        <ul class="product-features">
+          {product.data.applications.map((application) => (
+            <li>
+              <Icon name="target" />
+              {application}
+            </li>
+          ))}
+        </ul>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </div>
+
+      <aside class="product-aside">
+        <span class="product-aside__icon">
+          <Icon name={product.data.icon} />
+        </span>
+        <h2>¿Necesitas esta referencia?</h2>
+        <p>
+          Envíanos el número de parte, las medidas o una foto del componente.
+          Confirmamos disponibilidad y te acompañamos en la selección.
+        </p>
+        <a class="btn btn--primary btn--block" href="/contact-us/">
+          Solicitar cotización
+        </a>
+        {hasWhatsApp && (
+          <a
+            class="btn btn--outline btn--block"
+            href={whatsappLink(`Hola SIHYCA, necesito cotizar ${product.data.title}.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="whatsapp" />
+            Consultar por WhatsApp
+          </a>
+        )}
+        <p class="form-hint form-hint--spaced">
+          Producto NTN 100% original. Consulta condiciones de entrega para tu
+          ubicación.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Sigue explorando</p>
+          <h2>Productos relacionados</h2>
+        </div>
+        <div class="product-grid">
+          {related.map((entry) => (
+            <ProductCard product={entry} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CtaPanel />
+</BaseLayout>

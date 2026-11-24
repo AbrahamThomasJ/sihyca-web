@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import ProductCard from '../components/ProductCard.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import { site, whatsappLink } from '../data/site';
+
+const products = (await getCollection('products')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const hasWhatsApp = Boolean(whatsappLink());
+---
+
+<BaseLayout
+  title="Rodamientos NTN 100% originales"
+  description="Rodamientos y componentes NTN originales: rígidos de bolas, rodillos cilíndricos, cónicos, axiales, chumaceras, retenes y sellos."
+>
+  <PageHero
+    eyebrow="Suministro industrial"
+    title="Rodamientos NTN 100% originales"
+    description="En operaciones industriales, una pieza incorrecta puede detener toda la producción. Suministramos componentes originales con respaldo técnico especializado."
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Rodamientos' },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container split">
+      <div class="split__media">
+        <div class="media-frame">
+          <img
+            src="/images/bearings.svg"
+            alt="Tipos de rodamientos industriales NTN"
+            width="900"
+            height="500"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="media-frame__badge">
+            <Icon name="check" />
+            NTN 100% original
+          </span>
+        </div>
+      </div>
+
+      <div class="split__copy">
+        <p class="eyebrow">Calidad certificada</p>
+        <h2>Por qué elegir rodamientos NTN originales</h2>
+        <p class="lead">
+          Ofrecemos rodamientos originales NTN, reconocidos mundialmente por su
+          precisión, durabilidad y desempeño superior frente a alternativas de
+          baja calidad.
+        </p>
+        <p>
+          Un rodamiento no original puede parecer idéntico a simple vista, pero
+          su acero, tratamiento térmico y tolerancias no lo son. La diferencia
+          aparece en la vida útil, en la capacidad real de carga y en el riesgo
+          de una parada no planificada.
+        </p>
+        <ul class="product-features">
+          <li><Icon name="check" /> Trazabilidad y referencia verificada</li>
+          <li><Icon name="check" /> Asesoría para seleccionar la serie correcta</li>
+          <li><Icon name="check" /> Disponibilidad de componentes originales</li>
+          <li><Icon name="check" /> Respaldo técnico y de mantenimiento</li>
+        </ul>
+        <div class="actions-inline">
+          <a class="btn btn--primary" href="/contact-us/">Solicitar cotización</a>
+          {hasWhatsApp && (
+            <a
+              class="btn btn--outline"
+              href={whatsappLink('Hola SIHYCA, quisiera cotizar rodamientos NTN.')}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="whatsapp" />
+              WhatsApp
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Catálogo</p>
+        <h2>Rodamientos y componentes NTN</h2>
+        <p class="lead">
+          Explora las líneas que suministramos y consulta la referencia que
+          necesita tu equipo.
+        </p>
+      </div>
+
+      <div class="product-grid">
+        {products.map((product) => (
+          <ProductCard product={product} />
+        ))}
+      </div>
+
+      <div class="brand-strip">
+        {site.brands.map((brand) => (
+          <span class="brand-strip__item">{brand}</span>
+        ))}
+        <p class="brand-strip__note">
+          Si no encuentras la referencia, escríbenos: la buscamos por ti.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaPanel
+    title="Cotiza tu rodamiento con asesoría técnica"
+    text="Envíanos la referencia, las medidas o una foto del componente. Te ayudamos a identificar la pieza correcta y a confirmar disponibilidad."
+  />
+</BaseLayout>

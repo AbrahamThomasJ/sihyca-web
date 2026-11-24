@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eaf3fb"/>
+      <stop offset="1" stop-color="#cfe4f7"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="230" y1="110" x2="570" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10406f"/>
+      <stop offset="1" stop-color="#06182c"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="430" y1="190" x2="360" y2="410" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8fd0ff"/>
+      <stop offset="1" stop-color="#1e88e5"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" stroke="#1565c0" stroke-opacity=".08"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  <g transform="translate(400 300)">
+    <rect x="-210" y="-210" width="420" height="420" rx="26" fill="url(#panel)" stroke="#0d3a6b" stroke-opacity=".5" stroke-width="3"/>
+    <rect x="-210" y="-210" width="420" height="62" rx="26" fill="#0d3a6b"/>
+    <circle cx="-176" cy="-179" r="7" fill="#4be08a"/>
+    <circle cx="-152" cy="-179" r="7" fill="#ffd166"/>
+    <circle cx="-128" cy="-179" r="7" fill="#ee6c6c"/>
+    <g stroke="#7fc4f5" stroke-opacity=".25" stroke-width="2">
+      <path d="M-170-90h340M-170-40h340M-170 10h340M-170 60h340M-170 110h340M-170 160h340"/>
+      <path d="M-120-120v300M-60-120v300M0-120v300M60-120v300M120-120v300"/>
+    </g>
+    <g fill="none" stroke="#7fc4f5" stroke-opacity=".35" stroke-width="2">
+      <rect x="-160" y="-80" width="90" height="60" rx="8"/>
+      <rect x="20" y="40" width="110" height="70" rx="8"/>
+      <circle cx="-115" cy="120" r="26"/>
+      <circle cx="80" cy="-50" r="18"/>
+    </g>
+    <path d="M70-160 10 10h70L40 190" stroke="url(#bolt)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M70-160 10 10h70L40 190" stroke="#eaf6ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".8"/>
+  </g>
+  <g stroke="#1565c0" stroke-opacity=".35" stroke-width="2">
+    <path d="M80 500h120l40-40M680 100H560l-40 40"/>
+  </g>
+  <circle cx="700" cy="470" r="60" fill="#1e88e5" fill-opacity=".08"/>
+</svg>

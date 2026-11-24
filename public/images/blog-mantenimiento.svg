@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eaf3fb"/>
+      <stop offset="1" stop-color="#cfe4f7"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="900" y1="120" x2="1350" y2="780" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1565c0"/>
+      <stop offset="1" stop-color="#0d3a6b"/>
+    </linearGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" stroke="#1565c0" stroke-opacity=".08"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <path d="M0 720c260-120 460 60 760-40s520-220 840-80v300H0Z" fill="#1e88e5" fill-opacity=".08"/>
+  <g transform="translate(1180 430)" opacity=".92">
+    <circle r="250" fill="#0d3a6b" fill-opacity=".06" stroke="#0d3a6b" stroke-opacity=".14" stroke-width="3"/>
+    <g fill="url(#steel)">
+      <path d="M0-235 38-226 52-190 84-207 116-184 110-148 148-152 170-120 142-92 170-68 167-28 130-20 136 18 102 38 75 10 58 40 18 30 14-6-24-6-30-46-4-72-18-110 12-136 52-120 75-156 112-146 122-110 160-106 168-68 134-50 138-12 100 4 82-32 56 0 20-18 30-62-2-88 16-126 54-142 92-130 132-142 168-124 180-92 146-64 148-24 112-10 106 28 66 40 70 82 34 100 36 142-2 178-34 212-70 236H0Z"/>
+    </g>
+    <circle r="166" fill="#eaf3fb" stroke="url(#steel)" stroke-width="6"/>
+    <circle r="88" fill="url(#steel)"/>
+    <circle r="38" fill="#eaf3fb"/>
+  </g>
+  <g transform="translate(170 180)">
+    <rect width="560" height="400" rx="20" fill="#ffffff" fill-opacity=".75" stroke="#0d3a6b" stroke-opacity=".15" stroke-width="2"/>
+    <g stroke="#1565c0" stroke-opacity=".3" stroke-width="2">
+      <path d="M60 330h440M60 270h440M60 210h440M60 150h440"/>
+    </g>
+    <path d="M60 300 150 250 230 280 320 170 410 210 500 110" stroke="#1565c0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <g fill="#1e88e5">
+      <circle cx="60" cy="300" r="9"/><circle cx="150" cy="250" r="9"/><circle cx="230" cy="280" r="9"/>
+      <circle cx="320" cy="170" r="9"/><circle cx="410" cy="210" r="9"/><circle cx="500" cy="110" r="9"/>
+    </g>
+    <rect x="60" y="60" width="160" height="20" rx="10" fill="#0d3a6b" fill-opacity=".55"/>
+  </g>
+  <g stroke="#1565c0" stroke-opacity=".35" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M760 760h180l40-40M1000 700h120"/>
+    <circle cx="720" cy="760" r="14"/>
+    <circle cx="1180" cy="700" r="14"/>
+  </g>
+</svg>

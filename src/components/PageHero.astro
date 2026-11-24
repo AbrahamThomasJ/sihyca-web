@@ -1,0 +1,61 @@
+---
+import { site } from '../data/site';
+import { safeJsonLd } from '../utils/jsonld';
+
+interface Breadcrumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  breadcrumbs?: Breadcrumb[];
+}
+
+const { eyebrow, title, description, breadcrumbs = [] } = Astro.props;
+
+const breadcrumbLd =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.label,
+          ...(crumb.href
+            ? { item: new URL(crumb.href, site.url).href }
+            : {}),
+        })),
+      }
+    : null;
+---
+
+<section class="page-hero">
+  <div class="container">
+    {breadcrumbs.length > 0 && (
+      <nav aria-label="Ruta de navegación">
+        <ol class="breadcrumbs">
+          {breadcrumbs.map((crumb) =>
+            crumb.href ? (
+              <li><a href={crumb.href}>{crumb.label}</a></li>
+            ) : (
+              <li aria-current="page">{crumb.label}</li>
+            )
+          )}
+        </ol>
+      </nav>
+    )}
+
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {description && <p class="lead">{description}</p>}
+    <slot />
+  </div>
+</section>
+
+{breadcrumbLd && (
+  <script type="application/ld+json" set:html={safeJsonLd(breadcrumbLd)} />
+)}

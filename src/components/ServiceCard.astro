@@ -1,0 +1,38 @@
+---
+import Icon from './Icon.astro';
+
+interface Service {
+  slug: string;
+  title: string;
+  short: string;
+  image: string;
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const url = `/our-services/#${service.slug}`;
+---
+
+<article class="service-card">
+  <a class="service-card__media" href={url} tabindex="-1" aria-hidden="true">
+    <img
+      src={service.image}
+      alt=""
+      width="640"
+      height="480"
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+  <div class="service-card__body">
+    <h3>{service.title}</h3>
+    <p>{service.short}</p>
+    <a class="link-arrow service-card__link" href={url}>
+      Ver servicio
+      <Icon name="arrow-right" />
+    </a>
+  </div>
+</article>

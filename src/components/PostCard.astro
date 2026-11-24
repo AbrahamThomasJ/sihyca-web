@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { formatDate, isoDate } from '../utils/date';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const url = `/${post.id}/`;
+const date = formatDate(post.data.pubDate);
+---
+
+<article class="post-card">
+  <a class="post-card__media" href={url} tabindex="-1" aria-hidden="true">
+    <img
+      src={post.data.cover}
+      alt=""
+      width="1200"
+      height="675"
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+  <div class="post-card__body">
+    <div class="post-card__meta">
+      <span class="badge">{post.data.category}</span>
+      <time datetime={isoDate(post.data.pubDate)}>{date}</time>
+    </div>
+    <h2><a href={url}>{post.data.title}</a></h2>
+    <p>{post.data.description}</p>
+    <a class="link-arrow" href={url}>
+      Leer artículo
+      <Icon name="arrow-right" />
+    </a>
+  </div>
+</article>

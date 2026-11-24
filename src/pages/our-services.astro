@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import { site, whatsappLink } from '../data/site';
+
+const hasWhatsApp = Boolean(whatsappLink());
+---
+
+<BaseLayout
+  title="Servicios Industriales"
+  description="Mantenimiento mecánico, eléctrico, climatización, obras civiles y suministros industriales. Un solo proveedor para tu operación."
+>
+  <PageHero
+    eyebrow="Servicios"
+    title="Ingeniería y mantenimiento para operaciones exigentes"
+    description="Integramos mantenimiento mecánico, eléctrico, climatización, obras civiles y suministro de componentes para que tu planta opere sin interrupciones."
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Servicios' },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Nuestras áreas</p>
+        <h2>Qué sabemos hacer</h2>
+        <p class="lead">Servicios Top para Clientes Exigentes.</p>
+      </div>
+
+      <div class="services-grid">
+        {site.services.map((service) => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {site.services.map((service, index) => (
+    <section
+      id={service.slug}
+      class={`section ${index % 2 === 1 ? 'section--alt' : ''}`}
+    >
+      <div class={`container split ${index % 2 === 1 ? 'split--reverse' : ''}`}>
+        <div class="split__media">
+          <div class="media-frame media-frame--ratio">
+            <img
+              src={service.image}
+              alt={`${service.title} — SIHYCA`}
+              width="800"
+              height="600"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+
+        <div class="split__copy">
+          <p class="eyebrow">
+            {String(index + 1).padStart(2, '0')} — Servicio
+          </p>
+          <h2>{service.title}</h2>
+          <p class="lead">{service.description}</p>
+
+          <ul class="product-features">
+            {service.capabilities.map((capability) => (
+              <li>
+                <Icon name="check" />
+                {capability}
+              </li>
+            ))}
+          </ul>
+
+          <div class="actions-inline">
+            <a class="btn btn--primary" href="/contact-us/">
+              Solicitar cotización
+            </a>
+            {hasWhatsApp && (
+              <a
+                class="btn btn--outline"
+                href={whatsappLink(`Hola SIHYCA, necesito información sobre ${service.title}.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name="whatsapp" />
+                WhatsApp
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CtaPanel />
+</BaseLayout>

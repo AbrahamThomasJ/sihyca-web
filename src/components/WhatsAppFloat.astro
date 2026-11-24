@@ -1,0 +1,19 @@
+---
+import { whatsappLink } from '../data/site';
+import Icon from './Icon.astro';
+
+const waLink = whatsappLink();
+---
+
+{waLink && (
+  <a
+    class="wa-float"
+    href={waLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Escríbenos por WhatsApp"
+  >
+    <Icon name="whatsapp" />
+    <span class="wa-float__text">Escríbenos Ahora</span>
+  </a>
+)}

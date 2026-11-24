@@ -1,0 +1,374 @@
+---
+import { site } from '../data/site';
+import { whatsappLink } from '../data/site';
+
+const interests = [
+  ...site.services.map((service) => service.title),
+  'Rodamientos y componentes NTN',
+  'Otra consulta',
+];
+
+const waLink = whatsappLink();
+const captcha =
+  site.captcha.provider === 'turnstile' && site.captcha.siteKey ? site.captcha : null;
+const controller = site.legalName || site.name;
+const recipients = site.formEndpoint
+  ? 'el proveedor del formulario que procesa el envío'
+  : site.whatsappNumber
+    ? 'WhatsApp (Meta), si eliges ese canal'
+    : 'tu cliente de correo, si eliges ese canal';
+---
+
+<form
+  class="card form-card"
+  action={site.formEndpoint || '#'}
+  method="POST"
+  data-contact-form
+  data-endpoint={site.formEndpoint}
+  data-whatsapp={site.whatsappNumber}
+  data-email={site.email}
+  data-phone={site.phone}
+  data-subject={`Solicitud de cotización — ${site.name}`}
+>
+  <div class="form-grid">
+    <div class="form-field">
+      <label for="nombre">Nombre y apellido <span class="req">*</span></label>
+      <input
+        id="nombre"
+        name="nombre"
+        type="text"
+        autocomplete="name"
+        placeholder="Tu nombre"
+        maxlength="100"
+        required
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="empresa">Empresa</label>
+      <input
+        id="empresa"
+        name="empresa"
+        type="text"
+        autocomplete="organization"
+        placeholder="Nombre de la empresa"
+        maxlength="120"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="email">Correo electrónico <span class="req">*</span></label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        placeholder="nombre@empresa.com"
+        maxlength="254"
+        required
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="telefono">Teléfono</label>
+      <input
+        id="telefono"
+        name="telefono"
+        type="tel"
+        autocomplete="tel"
+        placeholder="Tu teléfono"
+        maxlength="25"
+        pattern="[0-9+()\-\s]{6,25}"
+        title="Solo números, espacios y los símbolos + ( ) -"
+      />
+    </div>
+
+    <div class="form-field form-field--full">
+      <label for="interes">¿Qué necesitas? <span class="req">*</span></label>
+      <select id="interes" name="interes" required>
+        <option value="">Selecciona una opción</option>
+        {interests.map((interest) => (
+          <option value={interest}>{interest}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="form-field form-field--full">
+      <label for="mensaje">Mensaje <span class="req">*</span></label>
+      <textarea
+        id="mensaje"
+        name="mensaje"
+        rows="5"
+        maxlength="2000"
+        placeholder="Cuéntanos sobre tu equipo, la referencia que buscas o el servicio que necesitas."
+        required
+      ></textarea>
+    </div>
+
+    <div class="hp-field" aria-hidden="true">
+      <label for="website">No completar este campo</label>
+      <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <input type="hidden" name="_subject" value={`Solicitud de cotización — ${site.name}`} />
+    <input
+      type="text"
+      name="_gotcha"
+      class="hp-field"
+      tabindex="-1"
+      autocomplete="off"
+      aria-hidden="true"
+    />
+
+    <div class="form-field form-field--full form-consent">
+      <label class="form-check" for="privacidad">
+        <input id="privacidad" name="privacidad" type="checkbox" value="aceptada" required />
+        <span>
+          He leído y acepto la
+          <a href="/politica-de-privacidad/" target="_blank" rel="noopener noreferrer">política de privacidad</a>.
+          <span class="req">*</span>
+        </span>
+      </label>
+      <p class="form-hint">
+        Responsable: {controller}. Finalidad: responder tu solicitud de cotización.
+        Destinatarios: {recipients}. Más información en la política de privacidad.
+      </p>
+    </div>
+
+    {captcha && (
+      <div class="form-field form-field--full">
+        <div class="cf-turnstile" data-sitekey={captcha.siteKey}></div>
+      </div>
+    )}
+
+    <div class="form-field form-field--full">
+      <button class="btn btn--primary btn--block" type="submit">
+        Enviar solicitud
+      </button>
+      <p class="form-hint">
+        Respondemos en horario laboral.
+        {waLink && (
+          <span>
+            También puedes escribirnos por{' '}
+            <a href={waLink} target="_blank" rel="noopener noreferrer">WhatsApp</a>.
+          </span>
+        )}
+        {!waLink && site.email && (
+          <span>
+            También puedes escribirnos a{' '}
+            <a href={`mailto:${site.email}`}>{site.email}</a>.
+          </span>
+        )}
+      </p>
+    </div>
+  </div>
+
+  <div class="form-status" role="status" aria-live="polite" data-form-status></div>
+</form>
+
+{captcha && (
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+)}
+
+<style>
+  .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-family: var(--font-body, inherit);
+    font-size: 0.92rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.45;
+    color: var(--navy-800);
+    cursor: pointer;
+  }
+
+  .form-check input[type='checkbox'] {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0.1rem 0 0;
+    padding: 0;
+    accent-color: var(--blue-600);
+    cursor: pointer;
+  }
+
+  .form-consent .form-hint {
+    margin-top: 0.4rem;
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const endpoint = form.dataset.endpoint ?? '';
+    const whatsappNumber = form.dataset.whatsapp ?? '';
+    const email = form.dataset.email ?? '';
+    const phone = form.dataset.phone ?? '';
+    const subject = form.dataset.subject ?? 'Solicitud de cotización';
+    const loadedAt = Date.now();
+    const MIN_FILL_MS = 3000;
+    const COOLDOWN_MS = 60000;
+    const OK_MESSAGE = 'Recibimos tu solicitud. Te contactaremos muy pronto.';
+
+    const LIMITS: Record<string, number> = {
+      nombre: 100,
+      empresa: 120,
+      email: 254,
+      telefono: 25,
+      mensaje: 2000,
+    };
+    const PHONE_RE = /^[0-9+()\-\s]{6,25}$/;
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const setStatus = (state: 'success' | 'error', message: string) => {
+      if (!status) return;
+      status.dataset.state = state;
+      status.textContent = message;
+    };
+
+    const startCooldown = () => {
+      if (!submit) return;
+      const label = submit.textContent;
+      submit.disabled = true;
+      const until = Date.now() + COOLDOWN_MS;
+      const tick = () => {
+        const left = Math.ceil((until - Date.now()) / 1000);
+        if (left <= 0) {
+          submit.disabled = false;
+          submit.textContent = label;
+          return;
+        }
+        submit.textContent = `Espera ${left} s para enviar otra`;
+        setTimeout(tick, 1000);
+      };
+      tick();
+    };
+
+    const validate = (data: FormData): string | null => {
+      for (const [field, max] of Object.entries(LIMITS)) {
+        if (String(data.get(field) ?? '').length > max) {
+          return `El campo "${field}" supera los ${max} caracteres.`;
+        }
+      }
+      const tel = String(data.get('telefono') ?? '').trim();
+      if (tel && !PHONE_RE.test(tel)) return 'El teléfono solo admite números, espacios y + ( ) -.';
+      if (!EMAIL_RE.test(String(data.get('email') ?? '').trim())) return 'Revisa tu correo electrónico.';
+      if (!data.get('privacidad')) return 'Debes aceptar la política de privacidad.';
+      return null;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+
+      // Honeypot: mismo mensaje de éxito para que un bot no distinga el rechazo.
+      const trapped =
+        String(data.get('website') ?? '').trim() !== '' ||
+        String(data.get('_gotcha') ?? '').trim() !== '';
+      if (trapped) {
+        setStatus('success', OK_MESSAGE);
+        form.reset();
+        return;
+      }
+      data.delete('website');
+
+      const problem = validate(data);
+      if (problem) {
+        setStatus('error', problem);
+        return;
+      }
+
+      if (endpoint && Date.now() - loadedAt < MIN_FILL_MS) {
+        // Demasiado rápido para una persona: respuesta idéntica a un envío correcto.
+        setStatus('success', OK_MESSAGE);
+        return;
+      }
+
+      const name = String(data.get('nombre') ?? '').trim();
+      const company = String(data.get('empresa') ?? '').trim();
+      const senderEmail = String(data.get('email') ?? '').trim();
+      const senderPhone = String(data.get('telefono') ?? '').trim();
+      const interest = String(data.get('interes') ?? '').trim();
+      const message = String(data.get('mensaje') ?? '').trim();
+
+      if (!endpoint) {
+        const lines = [
+          'Hola SIHYCA, quisiera solicitar una cotización.',
+          `Nombre: ${name}`,
+          company ? `Empresa: ${company}` : '',
+          `Correo: ${senderEmail}`,
+          senderPhone ? `Teléfono: ${senderPhone}` : '',
+          interest ? `Interés: ${interest}` : '',
+          message ? `Mensaje: ${message}` : '',
+        ].filter(Boolean);
+
+        if (whatsappNumber) {
+          const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
+          window.open(url, '_blank', 'noopener,noreferrer');
+          setStatus(
+            'success',
+            `Abrimos WhatsApp con los datos de tu solicitud.${
+              phone ? ` Si no se abrió, escríbenos al ${phone}.` : ''
+            }`
+          );
+        } else if (email) {
+          const mailSubject = `${subject} — ${name}`;
+          const body = lines.join('\n');
+          window.location.href = `mailto:${email}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(body)}`;
+          setStatus(
+            'success',
+            `Abrimos tu correo con los datos de la solicitud. Si no se abrió, escríbenos a ${email}.`
+          );
+        } else {
+          setStatus(
+            'error',
+            'El formulario aún no tiene un canal de envío configurado. Escríbenos por los canales de contacto disponibles.'
+          );
+          return;
+        }
+
+        form.reset();
+        return;
+      }
+
+      submit?.setAttribute('disabled', 'true');
+      let sent = false;
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          mode: 'cors',
+          credentials: 'omit',
+          referrerPolicy: 'strict-origin-when-cross-origin',
+          headers: { Accept: 'application/json' },
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        sent = true;
+        setStatus('success', OK_MESSAGE);
+        form.reset();
+      } catch {
+        const fallback = email
+          ? phone
+            ? `Escríbenos a ${email} o al ${phone}.`
+            : `Escríbenos a ${email}.`
+          : '';
+        setStatus(
+          'error',
+          `No pudimos enviar el formulario.${fallback ? ` ${fallback}` : ''}`
+        );
+      } finally {
+        if (sent) startCooldown();
+        else submit?.removeAttribute('disabled');
+      }
+    });
+  }
+</script>

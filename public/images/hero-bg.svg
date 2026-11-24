@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="0" x2="1500" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06182c"/>
+      <stop offset=".55" stop-color="#0a2a4f"/>
+      <stop offset="1" stop-color="#0d3a6b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(1230 380) rotate(90) scale(520)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1e88e5" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#1e88e5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="980" y1="120" x2="1490" y2="740" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8fd0ff" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#1e88e5" stop-opacity=".12"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#7fc4f5" stroke-opacity=".09"/>
+      <circle cx="0" cy="0" r="1.6" fill="#7fc4f5" fill-opacity=".25"/>
+    </pattern>
+    <linearGradient id="fade" x1="800" y1="700" x2="800" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06182c" stop-opacity="0"/>
+      <stop offset="1" stop-color="#04101f" stop-opacity=".8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <g opacity=".22" stroke="url(#ring)" stroke-width="1.2">
+    <path d="M-120 760 640 0"/>
+    <path d="M-60 880 760 60"/>
+    <path d="M120 900 860 160"/>
+  </g>
+  <g transform="translate(1250 430)" opacity=".9">
+    <circle r="302" stroke="url(#ring)" stroke-width="2"/>
+    <circle r="300" stroke="#7fc4f5" stroke-opacity=".12" stroke-width="18"/>
+    <circle r="236" stroke="#7fc4f5" stroke-opacity=".4" stroke-width="2"/>
+    <circle r="232" stroke="#7fc4f5" stroke-opacity=".12" stroke-width="16" stroke-dasharray="10 22"/>
+    <circle r="168" stroke="url(#ring)" stroke-width="2"/>
+    <circle r="64" stroke="#7fc4f5" stroke-opacity=".5" stroke-width="24" stroke-dasharray="6 30"/>
+    <g fill="#8fd0ff" fill-opacity=".6">
+      <circle cx="204" cy="0" r="15"/>
+      <circle cx="176.7" cy="102" r="15"/>
+      <circle cx="102" cy="176.7" r="15"/>
+      <circle cx="0" cy="204" r="15"/>
+      <circle cx="-102" cy="176.7" r="15"/>
+      <circle cx="-176.7" cy="102" r="15"/>
+      <circle cx="-204" cy="0" r="15"/>
+      <circle cx="-176.7" cy="-102" r="15"/>
+      <circle cx="-102" cy="-176.7" r="15"/>
+      <circle cx="0" cy="-204" r="15"/>
+      <circle cx="102" cy="-176.7" r="15"/>
+      <circle cx="176.7" cy="-102" r="15"/>
+    </g>
+    <circle r="34" stroke="#8fd0ff" stroke-opacity=".55" stroke-width="2"/>
+    <path d="M-370 0H-250M250 0H370M0 -370V-250M0 250V370" stroke="#7fc4f5" stroke-opacity=".35" stroke-width="1.5"/>
+  </g>
+  <g transform="translate(1040 150)" opacity=".35" stroke="#7fc4f5" stroke-width="1.4">
+    <circle r="52"/>
+    <circle r="30"/>
+    <path d="M52 0H74M-52 0H-74M0 52V74M0-52V-74M36.8 36.8 52.3 52.3M-36.8-36.8-52.3-52.3M36.8-36.8 52.3-52.3M-36.8 36.8-52.3 52.3"/>
+  </g>
+  <rect y="680" width="1600" height="220" fill="url(#fade)"/>
+</svg>

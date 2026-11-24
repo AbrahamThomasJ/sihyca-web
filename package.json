@@ -1,0 +1,30 @@
+{
+  "name": "sihyca-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "images": "node scripts/optimize-images.mjs",
+    "og": "node scripts/generate-og.mjs",
+    "build:strict": "node scripts/build-strict.mjs"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.10",
+    "@astrojs/sitemap": "^3.7.6",
+    "astro": "^7.4.13",
+    "rehype-external-links": "^3.0.0",
+    "rehype-sanitize": "^6.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "sharp": "^0.35.5",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  }
+}

@@ -1,0 +1,107 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import { site } from '../data/site';
+import { formatDate, isoDate } from '../utils/date';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const canonicalUrl = new URL(`/${post.id}/`, site.url).href;
+const date = formatDate(post.data.pubDate);
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  image: [new URL(post.data.cover, site.url).href],
+  datePublished: isoDate(post.data.pubDate),
+  dateModified: isoDate(post.data.updatedDate ?? post.data.pubDate),
+  author: { '@type': 'Organization', name: post.data.author },
+  publisher: {
+    '@type': 'Organization',
+    name: 'SIHYCA',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${site.url}/og-default.png`,
+    },
+  },
+  mainEntityOfPage: canonicalUrl,
+  inLanguage: 'es',
+};
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  jsonLd={articleLd}
+>
+  <PageHero
+    eyebrow={post.data.category}
+    title={post.data.title}
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Blog', href: '/blog/' },
+      { label: 'Artículo' },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <article class="article">
+        <div class="article__meta">
+          <span class="badge">{post.data.category}</span>
+          <time datetime={isoDate(post.data.pubDate)}>{date}</time>
+          <span aria-hidden="true">·</span>
+          <span>{post.data.author}</span>
+        </div>
+
+        <div class="article__cover">
+          <img
+            src={post.data.cover}
+            alt={post.data.coverAlt}
+            width="1200"
+            height="675"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        <div class="article__footer">
+          <a class="btn btn--outline" href="/blog/">
+            <Icon name="arrow-right" />
+            Volver al blog
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <CtaPanel
+    title="¿Necesitas asesoría técnica?"
+    text="Cuéntanos qué equipo está dando problemas o qué referencia estás buscando. Te ayudamos a encontrar la solución correcta."
+  />
+</BaseLayout>

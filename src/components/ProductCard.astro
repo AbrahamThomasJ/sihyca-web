@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+
+interface Props {
+  product: CollectionEntry<'products'>;
+}
+
+const { product } = Astro.props;
+---
+
+<a class="product-card" href={`/product/${product.id}/`}>
+  <span class="product-card__icon">
+    <Icon name={product.data.icon} />
+  </span>
+  <span>
+    <h3>{product.data.title}</h3>
+    <p>{product.data.short}</p>
+  </span>
+</a>

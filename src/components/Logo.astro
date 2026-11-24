@@ -1,0 +1,30 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  showTag?: boolean;
+}
+
+const { href = '/', class: className = '', showTag = true } = Astro.props;
+---
+
+<a class={`logo ${className}`.trim()} href={href} aria-label="SIHYCA — Inicio">
+  <svg class="logo__mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+    <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.4" />
+    <circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2.4" />
+    <g fill="currentColor">
+      <circle cx="39.5" cy="24" r="2.3" />
+      <circle cx="34.96" cy="34.96" r="2.3" />
+      <circle cx="24" cy="39.5" r="2.3" />
+      <circle cx="13.04" cy="34.96" r="2.3" />
+      <circle cx="8.5" cy="24" r="2.3" />
+      <circle cx="13.04" cy="13.04" r="2.3" />
+      <circle cx="24" cy="8.5" r="2.3" />
+      <circle cx="34.96" cy="13.04" r="2.3" />
+    </g>
+  </svg>
+  <span class="logo__text">
+    <span class="logo__name">SIHYCA</span>
+    {showTag && <span class="logo__tag">Servicios Industriales</span>}
+  </span>
+</a>

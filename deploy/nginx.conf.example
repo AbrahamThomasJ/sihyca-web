@@ -1,0 +1,58 @@
+# Generado automáticamente por src/security (npm run build). Ajusta server_name y rutas TLS.
+server {
+    listen 80;
+    server_name www.tu-dominio.com tu-dominio.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name www.tu-dominio.com tu-dominio.com;
+    # ssl_certificate     /etc/letsencrypt/live/tu-dominio.com/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/tu-dominio.com/privkey.pem;
+
+    root /var/www/sihyca/dist;
+    index index.html;
+    autoindex off;
+    error_page 404 /404.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+        add_header Cache-Control "no-cache" always;
+        add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" always;
+        add_header X-Frame-Options "DENY" always;
+        add_header Cross-Origin-Opener-Policy "same-origin" always;
+        add_header Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://wa.me; base-uri 'self'; object-src 'none'; script-src 'self' 'sha256-/5oWAErj9x28S/taHESpcPAdTW30y3KhaIkO5s4k6Q8=' 'sha256-0O7iB6zr9x0r6X6eWYITC9V5q+yWCGAoFvcysBGbY9Q=' 'sha256-1BvDVWLr3QCC20uHhUDi27eDFVJpk1uMQJGIWKUks2I=' 'sha256-O5uVfuvdFBrd/Rlbh+HkVbffAxXXZAT/xJ+N6DgbyyI=' 'sha256-Y8t0ntteBwH+PqGKUyjWW3CAk+BNJKSoQc0xZ68FjhM=' 'sha256-ZDqhMVTGnGksU/VfS0+JstmiwguSQpyxJbit90yqApk=' 'sha256-kmZE/W8I1iuTnl1b3yqzv9/DQZenPngd3NjSKMQl7y0=' 'sha256-xIb/Pa7FUshAu4ihwjchYcQpyCI8eS8kt40GpOAYCz8='; style-src 'self' 'sha256-ZzycFjTdRHO1M062fDQg1uAeDeGwZ99gf1IMLhKi17s='; frame-ancestors 'none'; upgrade-insecure-requests" always;
+    }
+
+    location /_astro/ {
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" always;
+        add_header X-Frame-Options "DENY" always;
+        add_header Cross-Origin-Opener-Policy "same-origin" always;
+        add_header Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://wa.me; base-uri 'self'; object-src 'none'; script-src 'self' 'sha256-/5oWAErj9x28S/taHESpcPAdTW30y3KhaIkO5s4k6Q8=' 'sha256-0O7iB6zr9x0r6X6eWYITC9V5q+yWCGAoFvcysBGbY9Q=' 'sha256-1BvDVWLr3QCC20uHhUDi27eDFVJpk1uMQJGIWKUks2I=' 'sha256-O5uVfuvdFBrd/Rlbh+HkVbffAxXXZAT/xJ+N6DgbyyI=' 'sha256-Y8t0ntteBwH+PqGKUyjWW3CAk+BNJKSoQc0xZ68FjhM=' 'sha256-ZDqhMVTGnGksU/VfS0+JstmiwguSQpyxJbit90yqApk=' 'sha256-kmZE/W8I1iuTnl1b3yqzv9/DQZenPngd3NjSKMQl7y0=' 'sha256-xIb/Pa7FUshAu4ihwjchYcQpyCI8eS8kt40GpOAYCz8='; style-src 'self' 'sha256-ZzycFjTdRHO1M062fDQg1uAeDeGwZ99gf1IMLhKi17s='; frame-ancestors 'none'; upgrade-insecure-requests" always;
+    }
+
+    location /fonts/ {
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" always;
+        add_header X-Frame-Options "DENY" always;
+        add_header Cross-Origin-Opener-Policy "same-origin" always;
+        add_header Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://wa.me; base-uri 'self'; object-src 'none'; script-src 'self' 'sha256-/5oWAErj9x28S/taHESpcPAdTW30y3KhaIkO5s4k6Q8=' 'sha256-0O7iB6zr9x0r6X6eWYITC9V5q+yWCGAoFvcysBGbY9Q=' 'sha256-1BvDVWLr3QCC20uHhUDi27eDFVJpk1uMQJGIWKUks2I=' 'sha256-O5uVfuvdFBrd/Rlbh+HkVbffAxXXZAT/xJ+N6DgbyyI=' 'sha256-Y8t0ntteBwH+PqGKUyjWW3CAk+BNJKSoQc0xZ68FjhM=' 'sha256-ZDqhMVTGnGksU/VfS0+JstmiwguSQpyxJbit90yqApk=' 'sha256-kmZE/W8I1iuTnl1b3yqzv9/DQZenPngd3NjSKMQl7y0=' 'sha256-xIb/Pa7FUshAu4ihwjchYcQpyCI8eS8kt40GpOAYCz8='; style-src 'self' 'sha256-ZzycFjTdRHO1M062fDQg1uAeDeGwZ99gf1IMLhKi17s='; frame-ancestors 'none'; upgrade-insecure-requests" always;
+    }
+
+    # Bloquear ficheros ocultos (excepto /.well-known/)
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+}

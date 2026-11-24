@@ -1,0 +1,113 @@
+---
+import { site } from '../data/site';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+const phoneHref = site.phoneHref || site.phone;
+const hasMap = Boolean(site.address || site.mapUrl);
+const hasContact = Boolean(site.address || site.email || site.phone);
+const socials = site.socials.filter((social) => social.href);
+---
+
+<footer class="site-footer">
+  <div
+    class:list={[
+      'container',
+      'footer-main',
+      {
+        'footer-main--compact': !hasMap && hasContact,
+        'footer-main--minimal': !hasMap && !hasContact,
+      },
+    ]}
+  >
+    <div class="footer-brand">
+      <Logo showTag={false} />
+      <p>
+        Soluciones integrales en mantenimiento, ingeniería y suministro de
+        componentes industriales de alta precisión.
+      </p>
+    </div>
+
+    <nav aria-label="Navegación del pie de página">
+      <h2 class="footer-title">Enlaces</h2>
+      <ul class="footer-links">
+        {site.nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    {hasContact && (
+      <div>
+        <h2 class="footer-title">Contacto</h2>
+        <ul class="footer-contact">
+          {site.address && (
+            <li>
+              <Icon name="pin" />
+              <span>{site.address}</span>
+            </li>
+          )}
+          {site.email && (
+            <li>
+              <Icon name="mail" />
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </li>
+          )}
+          {site.phone && (
+            <li>
+              <Icon name="phone" />
+              <a href={`tel:${phoneHref}`}>{site.phone}</a>
+            </li>
+          )}
+        </ul>
+      </div>
+    )}
+
+    {hasMap && (
+      <div class="map-card">
+        <div class="map-card__art" aria-hidden="true">
+          <span class="map-card__pin"><Icon name="pin" /></span>
+        </div>
+        <div>
+          <h2 class="footer-title">Ubicación</h2>
+          {site.address && <p>{site.address}</p>}
+        </div>
+        {site.mapUrl && (
+          <a
+            class="btn btn--ghost-light btn--sm"
+            href={site.mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver en Google Maps
+            <Icon name="arrow-right" />
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+
+  <div class="container footer-bottom">
+    {socials.length > 0 && (
+      <div class="footer-socials">
+        {socials.map((social) => (
+          <a
+            class="social-link"
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${social.label} de SIHYCA`}
+          >
+            <Icon name={social.icon} />
+          </a>
+        ))}
+      </div>
+    )}
+    <p>
+      © {year} SIHYCA. Todos los derechos reservados.
+      · <a href="/politica-de-privacidad/">Privacidad</a>
+      · <a href="/aviso-legal/">Aviso legal</a>
+    </p>
+  </div>
+</footer>

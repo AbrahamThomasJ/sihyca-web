@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+import { fillLegal } from '../utils/legal';
+
+const recipients = [
+  site.formEndpoint ? 'El proveedor del formulario de contacto (procesa el envío de tu solicitud).' : '',
+  site.whatsappNumber ? 'WhatsApp (Meta Platforms), si eliges contactarnos por ese canal.' : '',
+  site.mapEmbed ? 'Google Maps, solo si cargas el mapa interactivo de la página de contacto.' : '',
+].filter(Boolean);
+
+const sections = [
+  {
+    title: 'Responsable del tratamiento',
+    body: [
+      '{{RAZON_SOCIAL}} · NIF/RIF: {{NIF/RIF}}',
+      'Domicilio: {{DOMICILIO}}',
+      'Correo de contacto para asuntos de privacidad: {{EMAIL_PRIVACIDAD}}',
+    ],
+  },
+  {
+    title: 'Datos que recogemos y finalidad',
+    body: [
+      'Cuando usas el formulario de contacto recogemos tu nombre, empresa, correo, teléfono y el mensaje que nos envías. Los usamos únicamente para responder tu solicitud de cotización o consulta.',
+      'Este sitio no usa cookies, ni herramientas de analítica o publicidad.',
+    ],
+  },
+  {
+    title: 'Base legal y conservación',
+    body: [
+      'Tratamos tus datos con tu consentimiento (casilla de aceptación del formulario) y para atender tu solicitud. Los conservamos mientras dure la gestión de tu consulta y durante los plazos legales aplicables.',
+    ],
+  },
+  {
+    title: 'Destinatarios',
+    body: recipients.length
+      ? recipients
+      : ['No cedemos tus datos a terceros salvo obligación legal. Si escribes por correo, tu proveedor de correo procesará el mensaje.'],
+  },
+  {
+    title: 'Tus derechos',
+    body: [
+      'Puedes solicitar el acceso, rectificación, supresión, oposición, limitación y portabilidad de tus datos escribiendo a {{EMAIL_PRIVACIDAD}}. También puedes presentar una reclamación ante la autoridad de protección de datos de tu país.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Política de privacidad"
+  description="Cómo tratamos los datos personales que nos envías a través del formulario de contacto."
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Política de privacidad"
+    breadcrumbs={[{ label: 'Inicio', href: '/' }, { label: 'Política de privacidad' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <article class="article">
+        <div class="prose">
+          {sections.map((section) => (
+            <>
+              <h2>{section.title}</h2>
+              {section.body.map((paragraph) => <p>{fillLegal(paragraph)}</p>)}
+            </>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

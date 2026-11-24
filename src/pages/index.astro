@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import { site } from '../data/site';
+
+const whyIcons = ['shield', 'users', 'clock', 'target'];
+---
+
+<BaseLayout
+  title="SIHYCA – Servicios y Suministros Industriales"
+  description={site.description}
+>
+  <section class="hero">
+    <div class="container hero__inner">
+      <p class="eyebrow">Servicios y suministros industriales</p>
+      <h1>
+        Soluciones Industriales Confiables y Suministros Técnicos Especializado
+      </h1>
+      <p class="hero__subtitle">13 años impulsando la industria</p>
+      <div class="hero__actions">
+        <a class="btn btn--light" href="/contact-us/">
+          Contáctanos
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+      <div class="hero__badges">
+        <span><Icon name="shield" /> Rodamientos NTN 100% originales</span>
+        <span><Icon name="users" /> Atención personalizada</span>
+        <span><Icon name="gear" /> Mantenimiento industrial integral</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="split__media">
+        <div class="media-frame media-frame--ratio">
+          <img
+            src="/images/about.svg"
+            alt="Equipo industrial de SIHYCA en operación"
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="media-frame__badge">
+            <Icon name="shield" />
+            13 años de experiencia
+          </span>
+        </div>
+      </div>
+
+      <div class="split__copy">
+        <p class="eyebrow">Sobre nosotros</p>
+        <h2>Conócenos</h2>
+        <div class="prose prose--lg">
+          <p>
+            Como líderes en mantenimiento de maquinarias industriales,
+            priorizamos la mejora continua en costos, ofreciendo un servicio
+            personalizado. Nuestro equipo está formado por personas amables,
+            proactivas y atentas a las necesidades de los clientes, siguiendo
+            procedimientos estrictos para cumplir con las solicitudes de manera
+            efectiva.
+          </p>
+          <p>
+            También nos dedicamos a la compra-venta, importación y exportación
+            de materiales ferrosos, así como la construcción y mantenimiento de
+            obras civiles.
+          </p>
+        </div>
+        <a class="btn btn--outline" href="/our-story/">
+          Descubre más sobre nosotros aquí
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Nuestras áreas</p>
+        <h2>Qué sabemos hacer</h2>
+        <p class="lead">Servicios Top para Clientes Exigentes.</p>
+      </div>
+
+      <div class="services-grid">
+        {site.services.map((service) => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+
+      <div class="section-footer">
+        <a class="btn btn--primary" href="/our-services/">
+          Ver todos los servicios
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container split split--reverse">
+      <div class="split__media">
+        <div class="media-frame media-frame--dark">
+          <img
+            src="/images/bearings.svg"
+            alt="Tipos de rodamientos industriales NTN"
+            width="900"
+            height="500"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="media-frame__badge">
+            <Icon name="check" />
+            NTN 100% original
+          </span>
+        </div>
+      </div>
+
+      <div class="split__copy">
+        <p class="eyebrow">Presentamos</p>
+        <h2>Rodamientos industriales 100% originales</h2>
+        <p class="lead">
+          En operaciones industriales, una pieza incorrecta puede detener toda
+          la producción. Por eso ofrecemos rodamientos originales NTN,
+          reconocidos mundialmente por su precisión, durabilidad y desempeño
+          superior frente a alternativas de baja calidad.
+        </p>
+        <ul class="product-features">
+          <li><Icon name="check" /> Referencias NTN originales y trazables</li>
+          <li><Icon name="check" /> Asesoría técnica para elegir la referencia</li>
+          <li><Icon name="check" /> Suministro de componentes industriales</li>
+          <li><Icon name="check" /> Respaldo de mantenimiento integral</li>
+        </ul>
+        <a class="btn btn--light" href="/rodamientos/">
+          Ver todos los rodamientos
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Diferenciales</p>
+        <h2>Por qué escogernos:</h2>
+      </div>
+
+      <div class="why-grid">
+        {site.whyUs.map((item, index) => (
+          <article class="why-card">
+            <span class="why-card__icon">
+              <Icon name={whyIcons[index]} />
+            </span>
+            <span class="why-card__num" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight section--alt">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Grandes marcas que confían en nuestra capacidad técnica:</h2>
+      </div>
+      <div class="brand-strip">
+        {site.brands.map((brand) => (
+          <span class="brand-strip__item">{brand}</span>
+        ))}
+        <p class="brand-strip__note">
+          Suministramos rodamientos NTN 100% originales y componentes de las
+          principales marcas del mercado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaPanel />
+</BaseLayout>

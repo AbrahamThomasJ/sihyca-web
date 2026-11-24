@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071e38"/>
+      <stop offset="1" stop-color="#0d3a6b"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="360" y1="130" x2="760" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a9d8ff"/>
+      <stop offset=".45" stop-color="#4aa3ea"/>
+      <stop offset="1" stop-color="#1565c0"/>
+    </linearGradient>
+    <radialGradient id="ball" cx=".35" cy=".3" r=".8">
+      <stop stop-color="#eaf6ff"/>
+      <stop offset=".45" stop-color="#8fd0ff"/>
+      <stop offset="1" stop-color="#1565c0"/>
+    </radialGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" stroke="#7fc4f5" stroke-opacity=".08"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <rect width="1200" height="720" fill="url(#grid)"/>
+  <circle cx="600" cy="360" r="300" fill="#1e88e5" fill-opacity=".06"/>
+  <g transform="translate(600 360)">
+    <circle r="286" stroke="#7fc4f5" stroke-opacity=".2" stroke-width="1.5" stroke-dasharray="4 12"/>
+    <circle r="264" fill="#06182c" stroke="url(#metal)" stroke-width="10"/>
+    <circle r="196" fill="#0a2a4f" stroke="url(#metal)" stroke-width="6"/>
+    <circle r="170" fill="#06182c" stroke="url(#metal)" stroke-width="6"/>
+    <circle r="110" fill="#0a2a4f" stroke="url(#metal)" stroke-width="3"/>
+    <circle r="70" fill="#06182c" stroke="url(#metal)" stroke-width="8"/>
+    <g>
+      <circle cx="183" cy="0" r="34" fill="url(#ball)"/>
+      <circle cx="158.5" cy="91.5" r="34" fill="url(#ball)"/>
+      <circle cx="91.5" cy="158.5" r="34" fill="url(#ball)"/>
+      <circle cx="0" cy="183" r="34" fill="url(#ball)"/>
+      <circle cx="-91.5" cy="158.5" r="34" fill="url(#ball)"/>
+      <circle cx="-158.5" cy="91.5" r="34" fill="url(#ball)"/>
+      <circle cx="-183" cy="0" r="34" fill="url(#ball)"/>
+      <circle cx="-158.5" cy="-91.5" r="34" fill="url(#ball)"/>
+      <circle cx="-91.5" cy="-158.5" r="34" fill="url(#ball)"/>
+      <circle cx="0" cy="-183" r="34" fill="url(#ball)"/>
+      <circle cx="91.5" cy="-158.5" r="34" fill="url(#ball)"/>
+      <circle cx="158.5" cy="-91.5" r="34" fill="url(#ball)"/>
+    </g>
+    <g stroke="#8fd0ff" stroke-opacity=".5" stroke-width="1.2">
+      <path d="M-330 0H-290M290 0H330M0-330V-290M0 290V330"/>
+    </g>
+    <g stroke="#7fc4f5" stroke-opacity=".35" stroke-width="1.2">
+      <path d="M-264-360V-300M264-360V-300M-264-330H264"/>
+    </g>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="15" fill="#a9d8ff" fill-opacity=".85">
+    <path d="M890 250h120" stroke="#7fc4f5" stroke-opacity=".4"/>
+    <circle cx="890" cy="250" r="4" fill="#8fd0ff"/>
+    <text x="1020" y="255">Aro exterior</text>
+    <path d="M868 360h142" stroke="#7fc4f5" stroke-opacity=".4"/>
+    <circle cx="868" cy="360" r="4" fill="#8fd0ff"/>
+    <text x="1020" y="365">Bolas de precisión</text>
+    <path d="M830 490h180" stroke="#7fc4f5" stroke-opacity=".4"/>
+    <circle cx="830" cy="490" r="4" fill="#8fd0ff"/>
+    <text x="1020" y="495">Aro interior</text>
+  </g>
+  <g transform="translate(230 560)">
+    <rect width="150" height="44" rx="22" fill="#1e88e5" fill-opacity=".16" stroke="#7fc4f5" stroke-opacity=".35"/>
+    <text x="75" y="28" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-weight="700" font-size="14" fill="#d8ecff">NTN 100%</text>
+  </g>
+</svg>

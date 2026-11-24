@@ -1,0 +1,140 @@
+---
+import '../styles/fonts.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { site } from '../data/site';
+import { safeJsonLd } from '../utils/jsonld';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  ogType?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = site.description,
+  image = '/og-default.png',
+  ogType = 'website',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = title.includes('SIHYCA') ? title : `${title} | SIHYCA`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL(image, site.url).href;
+const telephone = site.phoneHref || site.phone;
+const socialUrls = site.socials
+  .map((social) => social.href)
+  .filter((href) => href);
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': site.address ? ['Organization', 'LocalBusiness'] : 'Organization',
+  '@id': `${site.url}/#organization`,
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/favicon.svg`,
+  image: ogImage,
+  description: site.description,
+  ...(site.email ? { email: site.email } : {}),
+  ...(telephone ? { telephone } : {}),
+  ...(site.address
+    ? {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: site.address,
+        },
+      }
+    : {}),
+  ...(site.geo
+    ? {
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: site.geo.lat,
+          longitude: site.geo.lng,
+        },
+      }
+    : {}),
+  ...(socialUrls.length > 0 ? { sameAs: socialUrls } : {}),
+  ...(telephone || site.email
+    ? {
+        contactPoint: [
+          {
+            '@type': 'ContactPoint',
+            ...(telephone ? { telephone } : {}),
+            ...(site.email ? { email: site.email } : {}),
+            contactType: 'sales',
+            availableLanguage: ['es'],
+          },
+        ],
+      }
+    : {}),
+};
+
+const schemas: Record<string, unknown>[] = [organizationLd];
+
+if (jsonLd) {
+  schemas.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
+}
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#06182c" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/inter-400-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/montserrat-600-800.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="SIHYCA" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <slot name="head" />
+
+    {schemas.map((schema) => (
+      <script type="application/ld+json" set:html={safeJsonLd(schema)} />
+    ))}
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFloat />
+  </body>
+</html>

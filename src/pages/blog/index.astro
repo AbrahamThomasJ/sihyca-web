@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import PostCard from '../../components/PostCard.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+---
+
+<BaseLayout
+  title="Blog industrial"
+  description="Artículos técnicos sobre rodamientos, mantenimiento industrial y continuidad operativa para plantas y equipos de alta exigencia."
+>
+  <PageHero
+    eyebrow="Blog"
+    title="Conocimiento técnico para tu operación"
+    description="Guías y recomendaciones sobre rodamientos, mantenimiento y confiabilidad industrial, escritas por nuestro equipo."
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Blog' },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container">
+      {posts.length > 0 ? (
+        <div class="post-grid">
+          {posts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      ) : (
+        <p class="center">Pronto publicaremos nuevos artículos.</p>
+      )}
+    </div>
+  </section>
+
+  <CtaPanel
+    title="¿Tu equipo necesita una revisión técnica?"
+    text="Nuestro equipo puede evaluar la aplicación, recomendar la referencia correcta y acompañarte en el montaje y mantenimiento."
+  />
+</BaseLayout>

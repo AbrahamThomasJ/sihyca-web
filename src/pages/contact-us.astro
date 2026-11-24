@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Icon from '../components/Icon.astro';
+import { site, whatsappLink } from '../data/site';
+
+const waLink = whatsappLink();
+const phoneHref = site.phoneHref || site.phone;
+const hasAside = Boolean(site.email || site.phone || site.address || waLink);
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Solicita una cotización de servicios industriales o rodamientos NTN originales. Escríbenos y te respondemos con una propuesta clara."
+>
+  <PageHero
+    eyebrow="Contacto"
+    title="Hablemos de tu operación"
+    description="Cuéntanos qué equipo necesitas atender o qué componente estás buscando. Te respondemos con una propuesta clara y técnica."
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Contacto' },
+    ]}
+  />
+
+  <section class="section">
+    <div class:list={['container', 'contact-grid', { 'contact-grid--single': !hasAside }]}>
+      <div>
+        <p class="eyebrow">Cotización</p>
+        <h2>Solicita una cotización</h2>
+        <p class="lead lead--spaced">
+          Completa el formulario y nuestro equipo se pondrá en contacto contigo.
+        </p>
+        <ContactForm />
+      </div>
+
+      {hasAside && (
+        <div class="contact-aside">
+          {site.email && (
+          <div class="card info-card">
+            <span class="info-card__icon"><Icon name="mail" /></span>
+            <div>
+              <h3>Correo electrónico</h3>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </div>
+          </div>
+        )}
+
+        {site.phone && (
+          <div class="card info-card">
+            <span class="info-card__icon"><Icon name="phone" /></span>
+            <div>
+              <h3>Teléfono</h3>
+              <a href={`tel:${phoneHref}`}>{site.phone}</a>
+            </div>
+          </div>
+        )}
+
+        {site.address && (
+          <div class="card info-card">
+            <span class="info-card__icon"><Icon name="pin" /></span>
+            <div>
+              <h3>Dirección</h3>
+              <p>{site.address}</p>
+              {site.mapUrl && (
+                <a
+                  href={site.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver ubicación en Google Maps
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+
+        {waLink && (
+          <div class="card info-card">
+            <span class="info-card__icon"><Icon name="whatsapp" /></span>
+            <div>
+              <h3>WhatsApp</h3>
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Escríbenos ahora
+              </a>
+            </div>
+          </div>
+        )}
+
+        {waLink && (
+          <div class="card quote-card">
+            <h3>Atención directa</h3>
+            <p>
+              ¿Necesitas una respuesta rápida por una parada de planta? Escríbenos
+              por WhatsApp y te atendemos de inmediato.
+            </p>
+            <a
+              class="btn btn--primary btn--block"
+              href={whatsappLink('Hola SIHYCA, necesito atención inmediata.')}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="whatsapp" />
+              Abrir WhatsApp
+            </a>
+          </div>
+        )}
+        </div>
+      )}
+    </div>
+  </section>
+
+  {site.mapEmbed && (
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Ubicación</p>
+          <h2>Visítanos</h2>
+          {site.address && <p class="lead">{site.address}</p>}
+        </div>
+
+        <div class="map-shell" data-map data-map-src={site.mapEmbed}>
+          <button
+            class="map-facade"
+            type="button"
+            data-map-load
+            aria-label="Cargar mapa interactivo de Google Maps"
+          >
+            <Icon name="pin" />
+            <strong>SIHYCA</strong>
+            {site.address && <span>{site.address}</span>}
+            <span class="map-facade__hint">
+              Haz clic para cargar el mapa interactivo
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<script>
+  const map = document.querySelector<HTMLElement>('[data-map]');
+  const trigger = map?.querySelector<HTMLButtonElement>('[data-map-load]');
+
+  trigger?.addEventListener('click', () => {
+    if (!map) return;
+
+    const src = map.dataset.mapSrc;
+    if (!src) return;
+
+    // Defensa en profundidad: solo https y solo Google Maps embed.
+    let url: URL;
+    try {
+      url = new URL(src);
+    } catch {
+      return;
+    }
+    const allowedHosts = ['www.google.com', 'maps.google.com'];
+    if (url.protocol !== 'https:' || !allowedHosts.includes(url.hostname)) return;
+
+    const iframe = document.createElement('iframe');
+    iframe.src = url.href;
+    iframe.title = 'Ubicación de SIHYCA';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.setAttribute(
+      'sandbox',
+      'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox'
+    );
+    iframe.allowFullscreen = true;
+
+    map.replaceChildren(iframe);
+  });
+</script>
+
+<style>
+  .map-shell {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--steel-100);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .map-shell iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .map-facade {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    text-align: center;
+    background-color: #e8f1fb;
+    background-image: linear-gradient(rgba(21, 101, 192, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(21, 101, 192, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at 50% 40%, rgba(30, 136, 229, 0.18), transparent 60%);
+    background-size: 32px 32px, 32px 32px, 100% 100%;
+    color: var(--navy-900);
+    transition: background-color 0.2s var(--ease);
+  }
+
+  .map-facade:hover {
+    background-color: #dcebfa;
+  }
+
+  .map-facade :global(.icon) {
+    width: 38px;
+    height: 38px;
+    color: var(--blue-600);
+  }
+
+  .map-facade strong {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  .map-facade span {
+    max-width: 40ch;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .map-facade .map-facade__hint {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--blue-700);
+  }
+</style>
